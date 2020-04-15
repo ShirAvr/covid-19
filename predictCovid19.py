@@ -13,14 +13,13 @@ print(rowsCount)
 df_patients = df_patients.dropna()
 print(df_patients.dtypes)
 
-# 1 for positive to corona test, 0 for negative
-# 1 for female, 0 for male
-# 1 for above 60 age, 0 for under
-df_patients['corona_result'] = np.where(df_patients['corona_result']=='שלילי', 0, 1)
-df_patients['gender'] = np.where(df_patients['gender']=='זכר', 0, 1)
-df_patients['age_60_and_above'] = np.where(df_patients['age_60_and_above']=='No', 0, 1)
+df_patients['corona_result'] = np.where(df_patients['corona_result'] == 'שלילי', 0, 1)
+df_patients['gender'] = np.where(df_patients['gender'] == 'זכר', 0, 1)
+df_patients['age_60_and_above'] = np.where(df_patients['age_60_and_above'] == 'No', 0, 1)
 df_patients['test_date'] = pd.to_datetime(df_patients.test_date)
 df_patients['test_date'] = df_patients.test_date.apply(lambda x: x.toordinal())
+df_patients['abroad'] = np.where(df_patients['test_indication'] == 'Abroad', 1, 0)
+df_patients['metConfirmed'] = np.where(df_patients['test_indication'] == 'Contact with confirmed', 1, 0)
 
 rowsCount, colCount = df_patients.shape
 print(rowsCount)
@@ -29,7 +28,7 @@ print(df_patients.tail())
 print(df_patients.describe())
 print(df_patients.dtypes)
 
-df_inputs = df_patients.drop(['corona_result'], axis=1) # seperate the depended param from the independed data
+df_inputs = df_patients.drop(['corona_result', 'test_indication'], axis=1) # seperate the depended param from the independed data
 
 print(df_inputs.head())
 print(df_inputs.tail())
