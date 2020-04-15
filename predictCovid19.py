@@ -1,22 +1,46 @@
 import numpy as np
 import pandas as pd
 # import tensorflow as tf
-from sklearn.cluster import KMeans
-df_line_list = pd.read_csv("novel-corona-virus-2019-dataset/COVID19_line_list_data.csv")
-df_country_info = pd.read_csv("datasets/covid19countryinfo.csv")
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
 
-df_line_list = df_line_list.filter(["id", "reporting date", "country", "gender", "age", "death", "recovered"]) 
-df_line_list = df_line_list.dropna()
-rowsCount, colCount = df_line_list.shape
-print(rowsCount) 
+df_patients = pd.read_excel(open('corona_tested_individuals.xlsx', 'rb'), sheet_name='1 - tested person data') 
+rowsCount, colCount = df_patients.shape
+print(rowsCount)
 
-print(df_line_list.head())
-print(df_line_list.tail())
+df_patients = df_patients.dropna()
 
-print(df_line_list.describe())
+# 1 for positive to corona test, 0 for negative
+# 1 for female, 0 for male
+# 1 for above 60 age, 0 for under
+df_patients['corona_result'] = np.where(df_patients['corona_result']=='שלילי', 0, 1)
+df_patients['gender'] = np.where(df_patients['gender']=='זכר', 0, 1)
+df_patients['age_60_and_above'] = np.where(df_patients['age_60_and_above']=='No', 0, 1)
 
-print("========")
-df_country_info = df_country_info.filter(["country", "test", "testpop", "quarantine", "schools", "publicplace", "gatheringlimit"]) 
-countryRowsCount, _ = df_country_info.shape
-print(countryRowsCount)
-print(df_country_info.head())
+rowsCount, colCount = df_patients.shape
+print(rowsCount)
+print(df_patients.head())
+print(df_patients.tail())
+print(df_patients.describe())
+
+df_inputs = df_patients.drop(['corona_result'], axis=1) # seperate the depended param from the independed data
+
+print(df_inputs.head())
+print(df_inputs.tail())
+
+x = df_inputs.iloc[:, :].values 	# inputs
+y = df_patients.iloc[:, 6].values # outputs
+
+print("=====")
+print(x)
+print(y)
+print("=====")
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
+classifier = KNeighborsClassifier(n_neighbors=5)
+classifier.fit(x_train, y_train)
+y_pred = classifier.predict(x_test)
+
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
