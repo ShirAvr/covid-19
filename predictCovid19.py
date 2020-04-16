@@ -3,7 +3,7 @@ import pandas as pd
 # import tensorflow as tf
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, balanced_accuracy_score
 from sklearn.preprocessing import StandardScaler
 
 df_patients = pd.read_excel(open('corona_tested_individuals.xlsx', 'rb'), sheet_name='1 - tested person data') 
@@ -49,9 +49,10 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-classifier = KNeighborsClassifier(n_neighbors=5)
-classifier.fit(x_train, y_train)
-y_pred = classifier.predict(x_test)
+knnClassifier = KNeighborsClassifier(n_neighbors=5)
+knnClassifier.fit(x_train, y_train)
+y_pred = knnClassifier.predict(x_test)
 
 print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
+print(balanced_accuracy_score(y_test, y_pred))
