@@ -43,9 +43,9 @@ print("=====")
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
 
+# performs feature scaling
 scaler = StandardScaler()
 scaler.fit(x_train)
-
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
