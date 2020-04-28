@@ -15,10 +15,10 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-knnClassifier = KNeighborsClassifier(n_neighbors=5)
+knnClassifier = KNeighborsClassifier(n_neighbors=25)
 knnClassifier.fit(x_train, y_train)
 y_pred = knnClassifier.predict(x_test)
-
+print(y_pred)
 print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 print(balanced_accuracy_score(y_test, y_pred))
