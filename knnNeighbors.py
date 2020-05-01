@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-x, y = prepareData.get()
+df_x, x, y = prepareData.get()
 
 # performs feature scaling
 scaler = StandardScaler()
@@ -51,25 +51,25 @@ print(confusion_matrix(total_y_test, total_y_pred))
 print(classification_report(total_y_test, total_y_pred))
 print(balanced_accuracy_score(total_y_test, total_y_pred))
 
-### Visualize accuracy for each iteration
-df_scores = pd.DataFrame(accuracy_scores, columns=['Scores'])
-sns.set(style="white", rc={"lines.linewidth": 3})
-sns.barplot(x=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], y="Scores", data=df_scores)
-plt.show()
-sns.set()
+# ### Visualize accuracy for each iteration
+# df_scores = pd.DataFrame(accuracy_scores, columns=['Scores'])
+# sns.set(style="white", rc={"lines.linewidth": 3})
+# sns.barplot(x=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], y="Scores", data=df_scores)
+# plt.show()
+# sns.set()
 
-y_scores = knnClassifier.predict_proba(total_x_test)
-fpr, tpr, threshold = roc_curve(total_y_test, y_scores[:, 1])
-roc_auc = auc(fpr, tpr)
+# y_scores = knnClassifier.predict_proba(total_x_test)
+# fpr, tpr, threshold = roc_curve(total_y_test, y_scores[:, 1])
+# roc_auc = auc(fpr, tpr)
 
-plt.figure()
-plt.plot(fpr, tpr, 'b', label = 'AUC (area = %0.2f)' % roc_auc)
-plt.legend(loc = 'lower right')
-plt.plot([0, 1], [0, 1],'r--')
-plt.xlim([0, 1])
-plt.ylim([0, 1])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve for knn')
-plt.savefig('knn_roc')
-plt.show()
+# plt.figure()
+# plt.plot(fpr, tpr, 'b', label = 'AUC (area = %0.2f)' % roc_auc)
+# plt.legend(loc = 'lower right')
+# plt.plot([0, 1], [0, 1],'r--')
+# plt.xlim([0, 1])
+# plt.ylim([0, 1])
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve for knn')
+# plt.savefig('knn_roc')
+# plt.show()

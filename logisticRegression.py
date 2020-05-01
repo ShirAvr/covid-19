@@ -10,7 +10,7 @@ from sklearn.metrics import roc_curve
 import matplotlib.pyplot as plt 
 import seaborn as sns
 
-x, y = prepareData.get()
+df_x, x, y = prepareData.get()
 
 # performs feature scaling
 scaler = StandardScaler()
@@ -38,6 +38,12 @@ for train_index, test_index in kfold.split(x):
 
   accuracy_scores.append(accuracy_score(y_test, y_pred))
   balanced_accuracy_scores.append(balanced_accuracy_score(y_test, y_pred))
+
+# print(logreg.coef_) #use inbuilt class feature_importances of tree based classifiers
+# #plot graph of feature importances for better visualization
+# feat_importances = pd.Series(logreg.coef_[0], index=df_x.columns)
+# feat_importances.nlargest(10).plot(kind='barh')
+# plt.show()
 
 print("===========accuracy scores==============")
 print(accuracy_scores)

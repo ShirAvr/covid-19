@@ -65,7 +65,7 @@ def get():
 	# print(y)
 	# print("=====")
 
-	return [x, y]
+	return [df_inputs, x, y]
 	# x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
 
 	# return [x_train, x_test, y_train, y_test]
