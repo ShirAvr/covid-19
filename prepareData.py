@@ -52,7 +52,9 @@ def get():
 	# print(df_patients.describe())
 	# print(df_patients.dtypes)
 
-	df_inputs = df_patients.drop(['corona_result', 'test_indication'], axis=1) # seperate the depended param from the independed data
+	# seperate the depended param from the independed data
+	df_inputs = df_patients.drop(['corona_result', 'test_indication'], axis=1)
+
 
 	# print(df_inputs.head())
 	# print(df_inputs.tail())
