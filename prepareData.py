@@ -10,8 +10,7 @@ def get():
 	print(rowsCount)
 
 	df_patients = df_patients.dropna()
-	# print(df_patients.dtypes)
-
+	df_patients = df_patients.drop(df_patients[df_patients.corona_result == 'אחר'].index)
 	df_patients['corona_result'] = np.where(df_patients['corona_result'] == 'שלילי', 0, 1)
 	df_patients['gender'] = np.where(df_patients['gender'] == 'זכר', 0, 1)
 	df_patients['age_60_and_above'] = np.where(df_patients['age_60_and_above'] == 'No', 0, 1)
@@ -19,6 +18,9 @@ def get():
 	df_patients['test_date'] = df_patients.test_date.apply(lambda x: x.toordinal())
 	df_patients['abroad'] = np.where(df_patients['test_indication'] == 'Abroad', 1, 0)
 	df_patients['metConfirmed'] = np.where(df_patients['test_indication'] == 'Contact with confirmed', 1, 0)
+
+	rowsCount, colCount = df_patients.shape
+	print(rowsCount)
 
 	print(df_patients.corona_result.value_counts())
 
