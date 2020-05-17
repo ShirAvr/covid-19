@@ -19,7 +19,7 @@ scaler = StandardScaler()
 scaler.fit(x)
 x = scaler.transform(x)
 
-knnClassifier = KNeighborsClassifier(n_neighbors=5)
+knnClassifier = KNeighborsClassifier(n_neighbors=51)
 
 accuracy_scores = []
 balanced_accuracy_scores = []
