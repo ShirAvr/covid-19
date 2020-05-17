@@ -19,7 +19,7 @@ scaler = StandardScaler()
 scaler.fit(x)
 x = scaler.transform(x)
 
-knnClassifier = KNeighborsClassifier(n_neighbors=25)
+knnClassifier = KNeighborsClassifier(n_neighbors=5)
 
 accuracy_scores = []
 balanced_accuracy_scores = []
@@ -51,12 +51,12 @@ print(confusion_matrix(total_y_test, total_y_pred))
 print(classification_report(total_y_test, total_y_pred))
 print(balanced_accuracy_score(total_y_test, total_y_pred))
 
-### Visualize accuracy for each iteration
-# df_scores = pd.DataFrame(accuracy_scores, columns=['Scores'])
-# sns.set(style="white", rc={"lines.linewidth": 3})
-# sns.barplot(x=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], y="Scores", data=df_scores)
-# plt.show()
-# sns.set()
+## Visualize accuracy for each iteration
+df_scores = pd.DataFrame(accuracy_scores, columns=['Scores'])
+sns.set(style="white", rc={"lines.linewidth": 3})
+sns.barplot(x=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], y="Scores", data=df_scores)
+plt.show()
+sns.set()
 
 # ROC CURVE
 y_scores = knnClassifier.predict_proba(total_x_test)
@@ -68,7 +68,7 @@ plt.plot(fpr, tpr, 'b', label = 'AUC (area = %0.2f)' % roc_auc)
 plt.legend(loc = 'lower right')
 plt.plot([0, 1], [0, 1],'r--')
 plt.xlim([0, 1])
-plt.ylim([0, 1])
+plt.ylim([0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('ROC Curve for knn')

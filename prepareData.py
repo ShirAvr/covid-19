@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -22,8 +21,6 @@ def get():
 	rowsCount, colCount = df_patients.shape
 	print(rowsCount)
 
-	print(df_patients.corona_result.value_counts())
-
 	# Separate majority and minority classes
 	df_majority = df_patients[df_patients.corona_result==0]
 	df_minority = df_patients[df_patients.corona_result==1]
@@ -43,33 +40,10 @@ def get():
 	# Combine minority class with downsampled majority class
 	df_patients = pd.concat([df_majority_downsampled, df_minority_upsampled])
 	 
-	# Display new class counts
-	print(df_patients.corona_result.value_counts())
-
-	rowsCount, colCount = df_patients.shape
-	print(rowsCount)
-
-	# print(df_patients.head())
-	# print(df_patients.tail())
-	# print(df_patients.describe())
-	# print(df_patients.dtypes)
-
 	# seperate the depended param from the independed data
 	df_inputs = df_patients.drop(['corona_result', 'test_indication'], axis=1)
-
-
-	# print(df_inputs.head())
-	# print(df_inputs.tail())
 
 	x = df_inputs.values 	# inputs
 	y = df_patients.iloc[:, 6].values # outputs
 
-	# print("=====")
-	# print(x)
-	# print(y)
-	# print("=====")
-
 	return [df_inputs, x, y]
-	# x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
-
-	# return [x_train, x_test, y_train, y_test]
